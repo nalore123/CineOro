@@ -28,4 +28,4 @@ class Review(models.Model):#model za recenziju
     created_at = models.DateTimeField(default=timezone.now)
 
     def __str__(self):
-        return f"{self.user.username} - {self.movie.title}"
+        return f"{self.user.username} --> {self.movie.title}"
