@@ -9,4 +9,5 @@ urlpatterns = [
     path('movies/', MovieList.as_view()),
     path('<str:genre>/', GenreFilmList.as_view()),
     path('<str:genre>/<str:movie>/', MovieReviewList.as_view()),
+    
 ]
