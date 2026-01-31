@@ -1,14 +1,22 @@
 {% extends "base_generic.html" %}
+
 {% block content %}
-<h1>Welcome to the CineOro application</h1>
-<p>Discover movies from all genres, read reviews written by other users
-and share your own opinions about the films you’ve watched.</p>
-    <h2>Explore Movies by Genre</h2>
-    <ul>
-        {% for genre in genre_list %}
-            <li>
-                <a href="/{{ genre.name }}/">{{ genre.name }}</a>
-            </li>
-        {% endfor %}
-    </ul>
+<h2>Welcome to CineOro</h2>
+
+<p>
+    Discover movies from all genres, read reviews written by other users,
+    and share your own opinions about the films you’ve watched.
+</p>
+
+<h3>Explore Movies by Genre</h3>
+
+<ul class="review-list genre-list">
+    {% for genre in genre_list %}
+        <li>
+            <a href="/{{ genre.name }}/" class="button">
+                {{ genre.name }}
+            </a>
+        </li>
+    {% endfor %}
+</ul>
 {% endblock %}

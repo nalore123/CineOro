@@ -3,27 +3,38 @@
 {% block content %}
 <h2>My reviews</h2>
 
-<p><a href="{% url 'main:add_review' %}">Add new review</a></p>
+<p>
+  <a class="button" href="{% url 'main:add_review' %}">Add new review</a>
+</p>
 
 {% if reviews %}
-<ul>
-  {% for r in reviews %}
-    <li>
-      <strong>{{ r.movie.title }}</strong><br>
-      Rating: {{ r.rating }}<br>
-      {{ r.comment }}<br>
+  <ul class="review-list">
+    {% for r in reviews %}
+      <li>
+        <h3 style="margin:0 0 8px 0;">{{ r.movie.title }}</h3>
 
-      <a href="{% url 'main:edit_review' r.pk %}">Edit</a>
+        <p style="margin:0 0 6px 0;">
+          <strong>Rating:</strong> {{ r.rating }}
+        </p>
 
-      <form method="post" action="{% url 'main:delete_review' r.pk %}" style="display:inline;">
-        {% csrf_token %}
-        <button type="submit">Delete</button>
-      </form>
-    </li>
-  {% endfor %}
-</ul>
+        <p style="margin:0 0 12px 0;">
+          {{ r.comment }}
+        </p>
+
+        <p style="margin:0;">
+          <a class="button" href="{% url 'main:edit_review' r.pk %}">Edit</a>
+          <br>
+          <br>
+          <form method="post" action="{% url 'main:delete_review' r.pk %}" style="display:inline;">
+            {% csrf_token %}
+            <a class="button" href="{% url 'main:delete_review' r.pk %}">Delete</a>
+          </form>
+        </p>
+      </li>
+    {% endfor %}
+  </ul>
 {% else %}
-<p>No reviews yet.</p>
+  <p>No reviews yet.</p>
 {% endif %}
 
 {% endblock %}

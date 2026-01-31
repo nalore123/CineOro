@@ -1,15 +1,33 @@
 {% extends "base_generic.html" %}
-{% block content %}
-    <h2>Movies: </h2>
-    <ul>
-        {% for movie in object_list %}
-            <li>Movie title: {{ movie.title }}</br>
-                Year: {{movie.release_year}}</br>
-                Description: {{movie.description}}</br>
-                Genre: {{movie.genre}}</br>
-                <a href="/{{ movie.genre.name }}/{{ movie.title }}/">View reviews</a>
-            </li>
 
-        {% endfor %}
-    </ul>
+{% block content %}
+<h2>Movies</h2>
+
+<ul class="review-list">
+    {% for movie in object_list %}
+        <li>
+            <h3 style="margin:0 0 8px 0;">{{ movie.title }}</h3>
+
+            <p style="margin:0 0 6px 0;">
+                <strong>Year:</strong> {{ movie.release_year }}
+            </p>
+
+            <p style="margin:0 0 6px 0;">
+                <strong>Genre:</strong> {{ movie.genre }}
+            </p>
+
+            {% if movie.description %}
+                <p style="margin:0 0 10px 0;">
+                    <strong>Description:</strong> {{ movie.description }}
+                </p>
+            {% endif %}
+
+            <a class="button" href="/{{ movie.genre.name }}/{{ movie.title }}/">
+                View reviews
+            </a>
+        </li>
+    {% empty %}
+        <p>No movies found for this genre.</p>
+    {% endfor %}
+</ul>
 {% endblock %}

@@ -2,21 +2,31 @@
 <html lang="en">
 
 <head>
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">
 </head>
 
 <body>
+  
+<header>
     <h1>CineOro</h1>
+</header>
+
+<div class="container">
     <div id="sidebar">
         {% block sidebar %}
         <ul>
             <li><a href="/">Home</a></li>
             <li><a href="/movies/">All Movies</a></li>
+
             {% if user.is_authenticated %}
                 <li><a href="{% url 'main:my_reviews' %}">My reviews</a></li>
-                <li><form action="{% url 'logout' %}" method="post" >
-                    {% csrf_token %}
-                    <button type="submit">Logout</button>
-                </form></li>
+                <li>
+                    <form action="{% url 'logout' %}" method="post">
+                        {% csrf_token %}
+                        <button type="submit">Logout</button>
+                    </form>
+                </li>
             {% else %}
                 <li><a href="{% url 'login' %}">Login</a></li>
                 <li><a href="{% url 'register' %}">Register</a></li>
@@ -29,5 +39,7 @@
         {% block content %}
         {% endblock %}
     </div>
+</div>
+
 </body>
 </html>

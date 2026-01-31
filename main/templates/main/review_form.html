@@ -1,13 +1,28 @@
 {% extends "base_generic.html" %}
 
 {% block content %}
-<h2>Review</h2>
+<div class="auth-container">
+    {% if movie %}
+        <h2>Review: {{ movie.title }}</h2>
+    {% else %}
+        <h2>Review</h2>
+    {% endif %}
 
-<form method="post">
-  {% csrf_token %}
-  {{ form.as_p }}
-  <button type="submit">Save</button>
-</form>
+    {% if form.errors %}
+        <div class="form-error">
+            Please fix the errors below.
+        </div>
+    {% endif %}
 
-<p><a href="{% url 'main:my_reviews' %}">Back</a></p>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+
+        <button type="submit">Save</button>
+    </form>
+
+    <div class="auth-footer">
+        <a class="button" href="{% url 'main:my_reviews' %}">Back</a>
+    </div>
+</div>
 {% endblock %}
