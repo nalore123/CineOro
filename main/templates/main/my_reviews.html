@@ -1,0 +1,29 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+<h2>My reviews</h2>
+
+<p><a href="{% url 'main:add_review' %}">Add new review</a></p>
+
+{% if reviews %}
+<ul>
+  {% for r in reviews %}
+    <li>
+      <strong>{{ r.movie.title }}</strong><br>
+      Rating: {{ r.rating }}<br>
+      {{ r.comment }}<br>
+
+      <a href="{% url 'main:edit_review' r.pk %}">Edit</a>
+
+      <form method="post" action="{% url 'main:delete_review' r.pk %}" style="display:inline;">
+        {% csrf_token %}
+        <button type="submit">Delete</button>
+      </form>
+    </li>
+  {% endfor %}
+</ul>
+{% else %}
+<p>No reviews yet.</p>
+{% endif %}
+
+{% endblock %}

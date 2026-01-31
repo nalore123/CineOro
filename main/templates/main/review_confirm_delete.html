@@ -1,0 +1,14 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+<h2>Delete review</h2>
+
+<p>Are you sure you want to delete review for <strong>{{ review.movie.title }}</strong>?</p>
+
+<form method="post">
+  {% csrf_token %}
+  <button type="submit">Yes, delete</button>
+</form>
+
+<p><a href="{% url 'main:my_reviews' %}">Cancel</a></p>
+{% endblock %}
