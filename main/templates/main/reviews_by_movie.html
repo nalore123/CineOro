@@ -16,4 +16,15 @@
     {% else %}
         <p>No reviews yet for this movie.</p>
     {% endif %}
-{% endblock %}
+
+    <hr>
+
+    {% if user.is_authenticated %}
+     <a href="{% url 'main:add_review_for_movie' movie.title %}">
+       <button>Add review</button>
+     </a>
+    {% else %}
+       <p><a href="{% url 'login' %}">Login</a> to add a review.</p>
+    {% endif %}
+
+    {% endblock %}
