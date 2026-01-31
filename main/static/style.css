@@ -162,14 +162,6 @@ ul.review-list.genre-list li {
 }
 
 /* My review */
-
-button.danger {
-    background-color: #c0392b;
-}
-button.danger:hover {
-    background-color: #e74c3c;
-}
-
 /* review_confirm_delete */ 
 button.danger {
     background-color: #c0392b;
