@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-    {% load static %}
+    {% load static %}<!-- koristenje statickog css filea -->
     <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">
 </head>
 
@@ -14,16 +14,18 @@
 
 <div class="container">
     <div id="sidebar">
-        {% block sidebar %}
+        {% block sidebar %} 
         <ul>
             <li><a href="/">Home</a></li>
             <li><a href="/movies/">All Movies</a></li>
 
-            {% if user.is_authenticated %}
+            {% if user.is_authenticated %}<!-- ovo se prikazuje ako je korisnik ulogiran -->
                 <li><a href="{% url 'main:my_reviews' %}">My reviews</a></li>
                 <li>
                     <form action="{% url 'logout' %}" method="post">
-                        {% csrf_token %}
+                        <!-- jedinstveni sigurnosni kod koji django dodaje u post forme kako bi
+                        sprijecio zlonamjerne zahtjeve s drugih stranica-->
+                        {% csrf_token %} 
                         <button type="submit">Logout</button>
                     </form>
                 </li>

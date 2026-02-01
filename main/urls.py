@@ -4,6 +4,7 @@ from main.views import *
 
 app_name = 'main' 
 
+#povezivananje urlova sa viewima i omogucava generiranja linkova
 urlpatterns = [
     path('', GenreList.as_view()),
     path('movies/', MovieList.as_view()),

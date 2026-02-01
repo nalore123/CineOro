@@ -16,13 +16,15 @@ class MovieList(ListView):
 class GenreList(ListView):
     model = Genre
 
+#lista filmova po zanru
 class GenreFilmList(ListView):
     template_name = 'main/movies_by_genre.html'
 
     def get_queryset(self):
         self.genre = get_object_or_404(Genre, name=self.kwargs['genre'])
         return Movie.objects.filter(genre=self.genre)
-    
+
+#prikazivanje reviewa za film    
 class MovieReviewList(ListView):
     template_name = 'main/reviews_by_movie.html'
 
@@ -30,11 +32,18 @@ class MovieReviewList(ListView):
         self.movie_obj = get_object_or_404(Movie, title=self.kwargs['movie'])
         return Review.objects.filter(movie=self.movie_obj)
 
+    #dodavanje dodatnih podataka u templateu
     def get_context_data(self, **kwargs):
+        #dohvaća context koji listview automatski stvara, tj lista recenzija
         context = super().get_context_data(**kwargs)
+        #dodaje film u kontekst templatea tako da se može korisitit movie.title
         context['movie'] = self.movie_obj 
         return context
     
+#prikazuje registracijski obrazac, ako korisnik posalje formu, provjerava se 
+#ako je ispravno popunjenja, kreira se novi korisnik
+#automatski ga se prijavljuje i preusmjerava na homepage
+#ako nije post, samo se prikazuje prazna forma
 def register(request):
     if request.method == 'POST':
         form = UserCreationForm(request.POST)
@@ -51,12 +60,15 @@ def register(request):
 
     return render(request, 'registration/register.html', {'form': form})
 
+#prikazuje sve recenzije koje je prijavljeni korisnik napravio
+#dostupno samo prijavljenim korisnicima
 # dodavanje recenzija preko my reviews
 @login_required
 def my_reviews(request):
     reviews = Review.objects.filter(user=request.user)
     return render(request, 'main/my_reviews.html', {'reviews': reviews})
 
+#dodavanje nove recenzije, sprema se u bazu, preusmjerava na my_reviews
 @login_required
 def add_review(request):
     if request.method == 'POST':
@@ -71,6 +83,7 @@ def add_review(request):
 
     return render(request, 'main/review_form.html', {'form': form})
 
+#uređivanje recenzije, dohvaćanje recenzije prekko pk samo ako pripada korisniku
 @login_required
 def edit_review(request, pk):
     review = get_object_or_404(Review, pk=pk, user=request.user)
@@ -85,6 +98,7 @@ def edit_review(request, pk):
 
     return render(request, 'main/review_form.html', {'form': form})
 
+#briše recenziju
 @login_required
 def delete_review(request, pk):
     review = get_object_or_404(Review, pk=pk, user=request.user)
